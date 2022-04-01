@@ -17,16 +17,13 @@ from load_data import load_data
 
 if __name__ == '__main__':
 
-    batch_size = 64
-    trainloader, classes = load_data()
+    batch_size = 4
+    trainloader, testloader, classes = load_data()
+
     # data_iter = iter(train_loader)
     # images = data_iter.__next__()
 
     def imshow(img):
-        npimg = img.numpy()  # convert to numpy objects
-        plt.imshow(np.transpose(npimg, (1, 2, 0)))
-        plt.show()
-
         ''' function to show image '''
         img = img / 2 + 0.5  # unnormalize
         npimg = img.numpy()  # convert to numpy objects
@@ -37,6 +34,7 @@ if __name__ == '__main__':
     # get random training images with iter function
     dataiter = iter(trainloader)
     images, labels = dataiter.next()
+
 
     # call function on our images
     imshow(torchvision.utils.make_grid(images))
@@ -58,7 +56,7 @@ if __name__ == '__main__':
             # Max pooling over a (2, 2) window
             self.pool = nn.MaxPool2d(2, 2)
             self.conv2 = nn.Conv2d(6, 16, 5)
-            self.fc1 = nn.Linear(16 * 5 * 5, 120)  # 5x5 from image dimension
+            self.fc1 = nn.Linear(16 * 5 * 5, 120)  # 5x5 from image dimension #16*47*47, 120
             self.fc2 = nn.Linear(120, 84)
             self.fc3 = nn.Linear(84, 10)
 
@@ -66,7 +64,7 @@ if __name__ == '__main__':
             ''' the forward propagation algorithm '''
             x = self.pool(F.relu(self.conv1(x)))
             x = self.pool(F.relu(self.conv2(x)))
-            x = x.view(-1, 16 * 5 * 5)
+            x = x.view(x.size(0), 16 * 5 * 5) #16*47*47
             x = F.relu(self.fc1(x))
             x = F.relu(self.fc2(x))
             x = self.fc3(x)
