@@ -19,19 +19,6 @@ from torch.utils.data import DataLoader
 
 def load_data():
 
-    # data = []
-    # for im_path in glob.glob("C:/Users/Luki/Downloads/archive/shapes/circle/*.png"):
-    #      im = imageio.imread(im_path)
-    #      data.append(im)
-    #
-    #
-    # for im_path in glob.glob("C:/Users/Luki/Downloads/archive/shapes/circle/*.png"):
-    #     im = imageio.imread(im_path)
-    #     print(im)
-    # set batch_size
-
-
-    # set number of workers
     num_workers = 2
 
     transform = transforms.Compose(  # composing several transforms together
@@ -50,6 +37,7 @@ def load_data():
         train_dataset,
         batch_size=4,
         num_workers=1,
+        shuffle=True
     )
 
 
@@ -67,17 +55,5 @@ def load_data():
     classes = ('circle', 'square', 'star', 'triangle')
 
     return train_loader, testloader, classes
-
-    #                                         download=True, transform=transform)
-    # trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-    #                                           shuffle=True, num_workers=num_workers)
-    #
-    # # load test data
-    # testset = torchvision.datasets.CIFAR10(root='./data', train=False,
-    #                                        download=True, transform=transform)
-    # testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-    #                                          shuffle=False, num_workers=num_workers)
-
-    # put 10 classes into a set
 
 load_data()
